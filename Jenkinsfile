@@ -29,7 +29,7 @@ node(){
                 sh 'npm --version'
                 sh "npm --registry https://registry.npm.taobao.org install"
                 sh 'npm install'
-                sh 'npm run build'
+                sh 'npm run build:prod'
             }
             }
         catch(err){
