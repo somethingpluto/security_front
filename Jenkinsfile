@@ -43,7 +43,7 @@ node(){
             sh 'pwd'
             sh 'ls'
              // 项目打包到了dist文件夹，需要复制到devops_build文件夹下，devops_build需要手动创建，作用在后面
-            sh 'cp -r dist ./devops_build'
+            sh 'cp -r build ./devops_build'
             sh 'cp -r Dockerfile ./devops_build'
             sh 'cp -r default.conf ./devops_build'
 
