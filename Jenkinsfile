@@ -47,12 +47,12 @@ node(){
             sh 'cp -r Dockerfile ./devops_build'
             sh 'cp -r default.conf ./devops_build'
 
-// //             sh "docker rm -f ${dockerName}"
+            sh "docker rm -f ${dockerContainerName}"
 //             // 创建nginx镜像，工作目录为devops_build，配置文件为Dockerfile
-           sh "docker build --no-cache=true -t ${dockerImageName} ./devops_build"
+            sh "docker build --no-cache=true -t ${dockerImageName} ./devops_build"
 //
 //             // 运行nginx实例并映射80端口到宿主机
-          sh "docker run -d -p 8885:80 --name=${dockerContainerName} ${dockerImageName}"
+           sh "docker run -d -p 8885:80 --name=${dockerContainerName} ${dockerImageName}"
 
 //
 //             // 只保留最新的三个镜像
