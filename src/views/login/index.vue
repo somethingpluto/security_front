@@ -1,10 +1,11 @@
 <template>
   <div class="login-container">
-    <div class="header" />
     <div class="body">
       <el-card class="login-card" shadow="hover">
-        <div>
-          <h3>欢迎使用xxx系统</h3>
+        <div style="display: flex;justify-content: center;align-items: center">
+          <el-image style="width: 35px;height: 35px;" :src="require('../../assets/images/check.png')" />
+          <el-image style="width: 35px;height: 35px;" :src="require('../../assets/images/bug.png')" />
+          <h1>代码漏洞检查系统</h1>
         </div>
         <el-tabs v-model="activeTab" stretch>
           <el-tab-pane label="登录" name="login">
@@ -148,30 +149,31 @@ $cursor: #fff;
 .login-container {
   width: 100%;
   height: 100%;
-  .header{
-    height: 12%;
-    background-color: black;
-  }
   .body{
-    height: 76%;
+    height: 92%;
     display: flex;
     justify-content: right;
     align-items: center;
-    background-color:#f7f7f7;
+    position: relative;
     .login-card{
       width: 400px;
-      height:  450px;
+      height:  400px;
       border-radius: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       padding: 0px;
+      position: absolute;
+      right: 30px;
     }
+
+    background: #f7f7f7 url("../../assets/images/background.jpg") no-repeat center center;
+    background-size: 100% 100%;
+
   }
   .foot{
-    height: 12%;
-    background-color: #20a0ff;
+    height: 8%;
+    background-color: #ffffff;
   }
 }
 
