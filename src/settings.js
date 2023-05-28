@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '网络攻击分析系统',
 
   /**
    * @type {boolean} true | false
