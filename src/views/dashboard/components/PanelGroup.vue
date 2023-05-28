@@ -1,41 +1,50 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="7" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="guide" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper ">
+          <span>
+            <el-image :src="require('../../../assets/images/attack.png')" />
+          </span>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
             攻击总数较上阶段
+            <span style="font-size: 36px;color: red;padding-left: 10px">+</span><count-to style="color: red" :start-val="0" :end-val="panelGroupData.attackAddNum" :duration="2600" class="card-panel-num" />
           </div>
-          <span style="font-size: 26px;color: red">+</span><count-to :start-val="0" :end-val="panelGroupData.attackAddNum" :duration="2600" class="card-panel-num" />
+          <h1>4523</h1>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="7" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="eye-open" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper ">
+          <span>
+            <el-image :src="require('../../../assets/images/normal.png')" />
+          </span>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            当日请求量
+            正常类型较上阶段
+            <span style="font-size: 36px;color: #34d034;padding-left: 10px">-</span><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.normalNum" :duration="2600" class="card-panel-num" />
           </div>
-          <count-to :start-val="0" :end-val="panelGroupData.todayRequestNum" :duration="3000" class="card-panel-num" />
+          <h1>25780</h1>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="7" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="chart" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper ">
+          <span>
+            <el-image :src="require('../../../assets/images/check.png')" />
+          </span>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            当前QPS
+            监测总数
+            <span style="font-size: 36px;color: #34d034;padding-left: 10px">-</span><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.totalCheck" :duration="2600" class="card-panel-num" />
           </div>
-          <count-to :start-val="0" :end-val="panelGroupData.currentQps" :duration="3200" class="card-panel-num" />
+          <h1>30303</h1>
         </div>
       </div>
     </el-col>
@@ -51,10 +60,9 @@ export default {
   data() {
     return {
       panelGroupData: {
-        attackAddNum: 0,
-        appNum: 0,
-        currentQps: 0,
-        todayRequestNum: 0
+        attackAddNum: 600,
+        normalNum: 3206,
+        totalCheck: 2606
       }
     }
   },
@@ -70,10 +78,6 @@ export default {
   },
   methods: {
     fetchData() {
-      this.panelGroupData.serviceNum = 10
-      this.panelGroupData.appNum = 10
-      this.panelGroupData.currentQps = 10
-      this.panelGroupData.todayRequestNum = 10
     }
   }
 }
@@ -88,7 +92,7 @@ export default {
   }
 
   .card-panel {
-    height: 108px;
+    height: 128px;
     font-size: 12px;
     position: relative;
     overflow: hidden;
@@ -138,16 +142,21 @@ export default {
     }
 
     .card-panel-icon-wrapper {
+      margin-left: 10px;
+      width: 60px;
+      height: 60px;
       float: left;
-      margin: 14px 0 0 14px;
-      padding: 16px;
       transition: all 0.38s ease-out;
       border-radius: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .card-panel-icon {
-      float: left;
       font-size: 48px;
+      width: 70px;
+      height: 70px;
     }
 
     .card-panel-description {
@@ -161,10 +170,14 @@ export default {
         color: rgba(0, 0, 0, 0.45);
         font-size: 16px;
         margin-bottom: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .card-panel-num {
-        font-size: 20px;
+        font-size: 30px;
+        padding-right: 10px;
       }
     }
   }

@@ -5,7 +5,7 @@
         <div style="display: flex;justify-content: center;align-items: center">
           <el-image style="width: 35px;height: 35px;" :src="require('../../assets/images/check.png')" />
           <el-image style="width: 35px;height: 35px;" :src="require('../../assets/images/bug.png')" />
-          <h1>代码漏洞检查系统</h1>
+          <h1>网络攻击分析系统</h1>
         </div>
         <el-tabs v-model="activeTab" stretch>
           <el-tab-pane label="登录" name="login">
