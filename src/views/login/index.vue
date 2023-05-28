@@ -18,7 +18,7 @@
               </el-form-item>
             </el-form>
             <div style="display: flex;justify-content: center;align-items: center">
-              <el-button type="primary" style="width: 80%" @click="handleLogin">立即登录</el-button>
+              <el-button type="primary" style="width: 100%" @click="handleLogin">立即登录</el-button>
             </div>
 
           </el-tab-pane>
@@ -35,7 +35,7 @@
               </el-form-item>
             </el-form>
             <div style="display: flex;justify-content: center;align-items: center">
-              <el-button type="primary" style="width: 80%">立即注册</el-button>
+              <el-button type="primary" style="width: 100%">立即注册</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -173,7 +173,10 @@ $cursor: #fff;
   }
   .foot{
     height: 8%;
-    background-color: #ffffff;
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    font-weight: bold;
   }
 }
 
