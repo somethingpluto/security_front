@@ -52,7 +52,7 @@ node(){
             sh "docker build --no-cache=true -t ${dockerImageName} ./devops_build"
 //
 //             // 运行nginx实例并映射80端口到宿主机
-           sh "docker run -d -p 8885:80 --name=${dockerContainerName} ${dockerImageName}"
+           sh "docker run --restart=always -d -p 8885:80 --name=${dockerContainerName} ${dockerImageName}"
 
 //
 //             // 只保留最新的三个镜像
