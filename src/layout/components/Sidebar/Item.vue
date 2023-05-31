@@ -25,7 +25,7 @@ export default {
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      vnodes.push(<span style='fontSize:20px' slot='title'>{(title)}</span>)
     }
     return vnodes
   }
@@ -35,7 +35,7 @@ export default {
 <style scoped>
 .sub-el-icon {
   color: currentColor;
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
 }
 </style>
