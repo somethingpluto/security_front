@@ -40,6 +40,7 @@ module.exports = {
     proxy: {
       '/ipa': {
         target: 'http://yruns.top:3000/api/v1',
+        changeOrigin: true,
         pathRewrite: {
           '^/ipa': ''
         }
