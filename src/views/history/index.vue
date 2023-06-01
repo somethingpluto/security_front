@@ -83,7 +83,8 @@ export default {
       this.loading = true
       getRecordsData(this.pagination.currentPage, this.pagination.pageSize).then((response) => {
         console.log(response.data.data)
-        this.tableData = response.data.data
+        this.tableData = response.data.data.data
+        this.pagination = response.data.data.total
         this.loading = false
       })
     }
