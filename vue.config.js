@@ -38,11 +38,11 @@ module.exports = {
     },
     // before: require('./mock/mock-server.js'),
     proxy: {
-      '/ipa': {
+      '/prod-api': {
         target: 'http://yruns.top:3000',
         changeOrigin: true,
         pathRewrite: {
-          '^/ipa': '/api/v1'
+          '^/prod-api': '/api/v1'
         }
       }
     }

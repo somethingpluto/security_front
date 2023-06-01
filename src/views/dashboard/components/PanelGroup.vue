@@ -71,17 +71,9 @@ export default {
     }
   },
   watch: {
-    data: {
-      handler: function(newData, oldData) {
-        this.panelGroupData = newData
-      }
-    }
   },
-  created() {
-    this.fetchData()
-  },
-  mounted() {
-    this.fetchData()
+  async created() {
+    await this.fetchData()
   },
   methods: {
     async fetchData() {
