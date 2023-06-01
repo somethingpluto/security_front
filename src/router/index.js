@@ -52,11 +52,22 @@ export const constantRoutes = [
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '数据分析', icon: 'ds' }
-    }]
+    },
+    {
+      path: '/detail',
+      name: 'DetailInfo',
+      component: () => import('@/views/detailInfo/index.vue'),
+      meta: {
+        title: '具体信息',
+        affix: false
+      },
+      hidden: true
+    }
+    ]
   },
 
   {
-    path: '/history',
+    path: '/history.js',
     component: Layout,
     children: [
       {
@@ -84,7 +95,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  // mode: 'history.js', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

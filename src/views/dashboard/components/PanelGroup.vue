@@ -10,9 +10,9 @@
         <div class="card-panel-description">
           <div class="card-panel-text">
             攻击总数较上阶段
-            <span style="font-size: 36px;color: red;padding-left: 10px">+</span><count-to style="color: red" :start-val="0" :end-val="panelGroupData.attackAddNum" :duration="2600" class="card-panel-num" />
+            <span style="font-size: 36px;color: red;padding-left: 10px" /><count-to style="color: red" :start-val="0" :end-val="panelGroupData.attackAddNum" :duration="2600" class="card-panel-num" />
           </div>
-          <h1>4523</h1>
+          <count-to :start-val="0" :end-val="panelGroupData.totalAttackNum" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -26,9 +26,9 @@
         <div class="card-panel-description">
           <div class="card-panel-text">
             正常类型较上阶段
-            <span style="font-size: 36px;color: #34d034;padding-left: 10px">-</span><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.normalNum" :duration="2600" class="card-panel-num" />
+            <span style="font-size: 36px;color: #34d034;padding-left: 10px" /><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.normalNum" :duration="2600" class="card-panel-num" />
           </div>
-          <h1>25780</h1>
+          <count-to :start-val="0" :end-val="panelGroupData.totalNormalNum" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -42,9 +42,9 @@
         <div class="card-panel-description">
           <div class="card-panel-text">
             监测总数
-            <span style="font-size: 36px;color: #34d034;padding-left: 10px">-</span><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.totalCheck" :duration="2600" class="card-panel-num" />
+            <span style="font-size: 36px;color: #34d034;padding-left: 10px" /><count-to style="color: #34d034" :start-val="0" :end-val="panelGroupData.checkNum" :duration="2600" class="card-panel-num" />
           </div>
-          <h1>30303</h1>
+          <count-to :start-val="0" :end-val="panelGroupData.totalCheckNum" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -53,6 +53,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { getDashboardData } from '@/api/dashboard'
 export default {
   components: {
     CountTo
@@ -62,7 +63,10 @@ export default {
       panelGroupData: {
         attackAddNum: 600,
         normalNum: 3206,
-        totalCheck: 2606
+        checkNum: 2606,
+        totalCheckNum: 30303,
+        totalAttackNum: 4523,
+        totalNormalNum: 25780
       }
     }
   },
@@ -76,8 +80,21 @@ export default {
   created() {
     this.fetchData()
   },
+  mounted() {
+    this.fetchData()
+  },
   methods: {
-    fetchData() {
+    async fetchData() {
+      await getDashboardData().then((response) => {
+        const data = response.data.data
+        this.panelGroupData.attackAddNum = data.overview.attack_increment
+        console.log(this.panelGroupData)
+        this.panelGroupData.totalAttackNum = data.overview.attack_total
+        this.panelGroupData.normalNum = data.overview.normal_increment
+        this.panelGroupData.totalNormalNum = data.overview.normal_total
+        this.panelGroupData.totalCheckNum = data.overview.total
+        this.panelGroupData.checkNum = data.overview.variation
+      })
     }
   }
 }

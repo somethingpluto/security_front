@@ -28,6 +28,7 @@
         </div>
         <div class="item2">
           <div id="pie" ref="pie" />
+          <el-button icon="el-icon-menu" type="primary" @click="toDetailStatic">详细分析</el-button>
         </div>
       </el-card>
       <el-card style="flex: 2;margin-left: 10px;margin-right: 10px" shadow="hover">
@@ -38,6 +39,7 @@
         <div>
           <div class="item1">
             <div id="lineChart" ref="lineChart" />
+            <el-button icon="el-icon-menu" type="primary">详细分析</el-button>
           </div>
         </div>
       </el-card>
@@ -49,6 +51,7 @@
 import { mapGetters } from 'vuex'
 import * as echarts from 'echarts'
 import PanelGroup from '@/views/dashboard/components/PanelGroup.vue'
+import { getDashboardData } from '@/api/dashboard'
 
 export default {
   name: 'Dashboard',
@@ -58,14 +61,16 @@ export default {
       'name'
     ])
   },
-  mounted() {
+  async mounted() {
+    await this.fetchData()
     this.initLineGraph()
     this.initPieGraph()
     this.initLineAreaGraph()
   },
   data() {
     return {
-      maxAttackType: 'DDos'
+      maxAttackType: 'DDos',
+      attackNum: []
     }
   },
   methods: {
@@ -107,7 +112,7 @@ export default {
         },
         yAxis: [{
           type: 'value',
-          name: '销量',
+          name: '攻击次数',
           show: true,
           interval: 10,
           axisLine: {
@@ -133,10 +138,10 @@ export default {
           }
         }],
         series: [{
-          name: '销量',
+          name: '攻击次数',
           type: 'bar',
           barWidth: '50%',
-          data: [5, 20, 36, 10, 10, 20, 60]
+          data: this.attackNum
         }, {
           name: '占比',
           type: 'line',
@@ -224,6 +229,15 @@ export default {
         ]
       }
       myChart3.setOption(option3)
+    },
+    toDetailStatic() {
+      this.$router.push('/detail')
+    },
+    async fetchData() {
+      await getDashboardData().then((response) => {
+        const data = response.data.data
+        this.attackNum = data.analysis.attack_num
+      })
     }
   }
 }
@@ -263,10 +277,18 @@ export default {
     .item1{
       width: 100%;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     .item2{
       width: 100%;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     #lineChart{
       height: 350px;

@@ -54,9 +54,6 @@ node(){
 //             // 运行nginx实例并映射80端口到宿主机
            sh "docker run --restart=always -d -p 8885:80 --name=${dockerContainerName} ${dockerImageName}"
 
-//
-//             // 只保留最新的三个镜像
-//             sh """docker rmi -f \$(docker images | grep ${dockerName} | sed -n  '4,\$p' | awk '{print \$3}') || true"""
         }
         catch(err){
                 echo "deploy with Nginx failed"

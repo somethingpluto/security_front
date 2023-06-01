@@ -69,11 +69,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '123',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername, message: '请输入用户名' }],
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword, message: '请输入密码' }]
       },
       loading: false,
@@ -88,7 +88,7 @@ export default {
       registerRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername, message: '请输入用户名' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword, message: '请输入密码' }],
-        passwordAgain: [{ required: true, trigger: 'blur', validator: validateUsername, message: '请确认密码' }]
+        passwordAgain: [{ required: true, trigger: 'blur', validator: validatePassword, message: '请确认密码' }]
       }
     }
   },
