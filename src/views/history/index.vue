@@ -25,11 +25,13 @@
           :highlight-current-row="true"
         >
           <el-table-column
+            align="center"
             prop="id"
             label="id"
             width="60px"
           />
           <el-table-column
+            align="center"
             prop="protocol"
             label="协议"
             width="100px"
@@ -39,52 +41,61 @@
             </template>
           </el-table-column>
           <el-table-column
+            align="center"
             prop="service"
             label="服务"
             width="80px"
           />
           <el-table-column
+            align="center"
             prop="dst_bytes"
             label="目的字节数"
-            width="60px"
+            width="100px"
           />
           <el-table-column
+            align="center"
             prop="dst_port"
             label="目的端口"
             width="90px"
           />
           <el-table-column
+            align="center"
             prop="label"
             label="标签"
             width="90px"
           />
           <el-table-column
+            align="center"
             prop="flag"
             label="标志"
             width="90px"
           />
           <el-table-column
+            align="center"
             prop="duration"
-            label="持续事件"
+            label="持续时间"
             width="90px"
           />
           <el-table-column
+            align="center"
             prop="src_bytes"
             label="源字节数"
             width="90px"
           />
           <el-table-column
+            align="center"
             prop="src_host"
             label="源主机"
             width="160px"
           />
           <el-table-column
+            align="center"
             prop="date"
             label="日期"
             width="200px"
           />
         </el-table>
-        <div>
+        <div style="display: flex;justify-content: right;align-items: center">
           <el-pagination
             :current-page="pagination.currentPage"
             :page-sizes="[10, 15, 20, 25]"
