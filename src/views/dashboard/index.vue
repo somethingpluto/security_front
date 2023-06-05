@@ -17,13 +17,20 @@
       </el-card>
     </div>
     <div class="body">
-      <el-card style="flex: 1" shadow="hover">
+      <el-card
+        v-loading="pieLoading"
+        style="flex: 2"
+        shadow="hover"
+        element-loading-text="攻击事件统计中...."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(235, 241, 246, 0.7)"
+      >
         <div style="display: flex;justify-content: left;align-items: center">
           <el-image style="width: 40px;height: 40px" :src="require('../../assets/images/analyse.png')" />
           <h2 style="margin-left: 15px">攻击事件统计</h2>
           <div style="display: flex;justify-content: center;align-items: center;margin-left: 30px">
             <el-image style="width: 40px;height: 40px" :src="require('../../assets/images/warning.png')" />
-            <h3 style="color: red;">最多攻击事件{{ maxAttackType }}</h3>
+            <h3 style="color: red;">最多攻击事件{{ maxAttack }}</h3>
           </div>
         </div>
         <div class="item2">
@@ -31,7 +38,14 @@
           <el-button icon="el-icon-menu" type="primary" @click="toDetailStatic">详细分析</el-button>
         </div>
       </el-card>
-      <el-card style="flex: 2;margin-left: 10px;margin-right: 10px" shadow="hover">
+      <el-card
+        v-loading="lineLoading"
+        style="flex: 2;margin-left: 10px;margin-right: 10px"
+        shadow="hover"
+        element-loading-text="攻击事件分析中...."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(235, 241, 246, 0.7)"
+      >
         <div style="display: flex;justify-content: left;align-items: center">
           <el-image style="width: 40px;height: 40px" :src="require('../../assets/images/statistics.png')" />
           <h2 style="margin-left: 15px">攻击事件分析</h2>
@@ -52,6 +66,7 @@ import { mapGetters } from 'vuex'
 import * as echarts from 'echarts'
 import PanelGroup from '@/views/dashboard/components/PanelGroup.vue'
 import { getDashboardData } from '@/api/dashboard'
+import fa from 'element-ui/src/locale/lang/fa'
 
 export default {
   name: 'Dashboard',
@@ -70,7 +85,12 @@ export default {
   data() {
     return {
       maxAttackType: 'DDos',
+      pieData: [],
+      maxAttack: '',
+      pieLoading: false,
+      lineLoading: false,
       attackNum: []
+
     }
   },
   methods: {
@@ -102,37 +122,21 @@ export default {
       const option = {
         tooltip: {
           trigger: 'axis',
-          formatter: '{b0}({a0}): {c0}<br />{b1}({a1}): {c1}%'
+          formatter: ''
         },
         legend: {
-          data: ['攻击次数', '占比']
+          data: ['攻击次数']
         },
         xAxis: {
-          data: this.getDate()
+          data: this.getDate().reverse()
         },
         yAxis: [{
           type: 'value',
           name: '攻击次数',
           show: true,
-          interval: 10,
           axisLine: {
             lineStyle: {
               color: '#5e859e',
-              width: 2
-            }
-          }
-        }, {
-          type: 'value',
-          name: '占比',
-          min: 0,
-          max: 100,
-          interval: 10,
-          axisLabel: {
-            formatter: '{value} %'
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#5e859e', // 纵坐标轴和字体颜色
               width: 2
             }
           }
@@ -142,11 +146,6 @@ export default {
           type: 'bar',
           barWidth: '50%',
           data: this.attackNum
-        }, {
-          name: '占比',
-          type: 'line',
-          smooth: true,
-          data: [15, 30, 46, 20, 20, 30, 62]
         }]
       }
       option && myChart.setOption(option)
@@ -166,13 +165,7 @@ export default {
           {
             type: 'pie',
             radius: '50%',
-            data: [
-              { value: '29.03', name: 'Dos' },
-              { value: '23.68', name: 'DDos' },
-              { value: '14.86', name: 'SSH-Brute' },
-              { value: '21.07', name: 'Bot' },
-              { value: '11.36', name: 'Unknown' }
-            ],
+            data: this.pieData,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -234,10 +227,28 @@ export default {
       this.$router.push('/detail')
     },
     async fetchData() {
+      this.pieLoading = true
+      this.lineLoading = true
       await getDashboardData().then((response) => {
+        // 获取数据
         const data = response.data.data
+        console.log(data)
         this.attackNum = data.analysis.attack_num
+        // 拼接pie 数据 查找最大值
+        let maxIndex = 0
+        for (let i = 0; i < data.statistics.attack_name.length; i++) {
+          const obj = { value: data.statistics.attack_num[i], name: data.statistics.attack_name[i] }
+          this.pieData.push(obj)
+          if (data.statistics.attack_num[i] > data.statistics.attack_num[maxIndex]) {
+            maxIndex = i
+          }
+        }
+        this.maxAttack = data.statistics.attack_name[maxIndex]
+        //   获取条形图数据
+        this.attackNum = data.analysis.attack_num.reverse()
       })
+      this.pieLoading = false
+      this.lineLoading = false
     }
   }
 }

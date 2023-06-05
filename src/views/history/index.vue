@@ -21,8 +21,8 @@
           :data="tableData"
           border
           style="width: 100%;font-size: 14px"
-          stripe
           :highlight-current-row="true"
+          :row-class-name="tableRowClassName"
         >
           <el-table-column
             align="center"
@@ -281,6 +281,15 @@ export default {
       this.pagination.currentPage = 1
       this.pagination.pageSize = 10
       this.fetchData()
+    },
+    tableRowClassName({ row, rowIndex }) {
+      if (row.protocol === 'icmp') {
+        return 'icmp'
+      } else if (row.protocol === 'tcp') {
+        return 'tcp'
+      } else {
+        return ''
+      }
     }
   }
 }
@@ -308,6 +317,15 @@ export default {
       height: 250px;
     }
   }
+}
+</style>
+<style>
+.el-table .icmp {
+  background: #f0f9eb;
+}
+
+.el-table .tcp {
+  background: #fdf6ec;
 }
 </style>
 
