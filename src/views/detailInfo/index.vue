@@ -176,7 +176,6 @@ export default {
       await getReporterData().then((response) => {
         const data = response.data.data
         this.realTableData = data
-        this.reporterLoading = false
       })
       // setTimeout(() => {
       //   this.realTableData = this.tableData
@@ -188,6 +187,7 @@ export default {
       }, 3500)
       setTimeout(() => {
         this.realConclude = this.conclude
+        this.reporterLoading = false
       }, 3500)
     },
     formaluteProportion(data) {
