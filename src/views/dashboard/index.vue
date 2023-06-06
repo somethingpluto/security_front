@@ -11,7 +11,7 @@
       <el-card class="right" shadow="hover">
         <div style="display: flex;justify-content: space-between;align-items: center">
           <h2>检测器更新</h2>
-          <el-button type="primary">上传数据</el-button>
+          <el-button type="primary" @click="()=>{this.dialogVisible=true}">上传数据</el-button>
         </div>
         <div id="line-area" ref="lineArea" style="width: 100%;height: 200px" />
       </el-card>
@@ -58,6 +58,24 @@
         </div>
       </el-card>
     </div>
+    <el-dialog
+      title="文件上传"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center">
+        <el-upload
+          class="upload-demo"
+          drag
+          action="https://jsonplaceholder.typicode.com/posts/"
+          multiple
+        >
+          <i class="el-icon-upload" />
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div slot="tip" class="el-upload__tip">请上传对应格式文件</div>
+        </el-upload>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -66,7 +84,6 @@ import { mapGetters } from 'vuex'
 import * as echarts from 'echarts'
 import PanelGroup from '@/views/dashboard/components/PanelGroup.vue'
 import { getDashboardData } from '@/api/dashboard'
-import fa from 'element-ui/src/locale/lang/fa'
 
 export default {
   name: 'Dashboard',
@@ -89,7 +106,8 @@ export default {
       maxAttack: '',
       pieLoading: false,
       lineLoading: false,
-      attackNum: []
+      attackNum: [],
+      dialogVisible: false
 
     }
   },
