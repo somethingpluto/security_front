@@ -67,7 +67,7 @@ export const constantRoutes = [
   },
 
   {
-    path: '/history.js',
+    path: '/history',
     component: Layout,
     children: [
       {

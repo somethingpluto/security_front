@@ -49,6 +49,7 @@
             prop="level"
             label="严重程度分级"
             align="center"
+            width="140px"
           /> <el-table-column
             prop="method"
             label="建议措施"
