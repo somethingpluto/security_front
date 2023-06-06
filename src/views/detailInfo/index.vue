@@ -20,18 +20,22 @@
           :row-class-name="tableRowClassName"
         >
           <el-table-column
-            prop="type"
+            prop="attack_type"
             label="攻击类型"
             align="center"
           />
           <el-table-column
-            prop="num"
+            prop="proportion"
             label="占总攻击的比例"
             align="center"
             width="140px"
-          />
+          >
+            <template slot-scope="scope">
+              {{ formaluteProportion(scope.row.proportion) }}
+            </template>
+          </el-table-column>
           <el-table-column
-            prop="harm"
+            prop="hazard_level"
             label="对计算机的危害"
             align="center"
           />
@@ -46,12 +50,12 @@
             align="center"
             width="140px"
           /> <el-table-column
-            prop="level"
+            prop="grade"
             label="严重程度分级"
             align="center"
             width="140px"
           /> <el-table-column
-            prop="method"
+            prop="measure"
             label="建议措施"
             align="center"
           />
@@ -76,7 +80,8 @@
 </template>
 
 <script>
-import fa from 'element-ui/src/locale/lang/fa'
+
+import { getReporterData } from '@/api/reporter'
 
 export default {
   name: 'DetailInfo',
@@ -160,24 +165,34 @@ export default {
   methods: {
     tableRowClassName({ row, rowIndex }) {
       console.log(row)
-      if (row.harm === '高') {
+      if (row.hazard_level === '高') {
         return 'danger-row'
-      } else if (row.harm === '非常高') {
+      } else if (row.hazard_level === '非常高') {
         return 'warning-row'
       }
       return ''
     },
-    fetchData() {
-      setTimeout(() => {
-        this.realTableData = this.tableData
+    async fetchData() {
+      await getReporterData().then((response) => {
+        const data = response.data.data
+        this.realTableData = data
         this.reporterLoading = false
-      }, 3500)
+      })
+      // setTimeout(() => {
+      //   this.realTableData = this.tableData
+      //   this.reporterLoading = false
+      // }, 3500)
+
       setTimeout(() => {
         this.realSuggestion = this.suggestions
       }, 3500)
       setTimeout(() => {
         this.realConclude = this.conclude
       }, 3500)
+    },
+    formaluteProportion(data) {
+      const d = Math.round(data * 1000) / 10
+      return d + '%'
     }
   }
 }
