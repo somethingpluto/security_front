@@ -6,3 +6,17 @@ export function getRecordsData(pageNum, pageSize) {
     method: 'get'
   })
 }
+
+export function getRecordsDataByLabel(pageNum, pageSize, label) {
+  return request({
+    url: `/records/list?pageSize=${pageSize}&pageNum=${pageNum}&label=${label}`,
+    method: 'get'
+  })
+}
+
+export function getIpStatisticData() {
+  return request({
+    url: `/records/ip`,
+    method: 'get'
+  })
+}

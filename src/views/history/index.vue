@@ -12,6 +12,22 @@
             size="medium"
             @click="refreshTable"
           >刷新</el-button>
+          <span style="margin-left: 10px">攻击类型:</span>
+          <el-select v-model="selectValue" style="margin-left: 2px" placeholder="请选择攻击类型" @change="handleSelectChange">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+          <el-button
+            icon="el-icon-cpu"
+            type="primary"
+            size="medium"
+            style="margin-left: 10px"
+            @click="()=>{this.dialogVisible=true}"
+          >风险IP</el-button>
         </div>
         <el-table
           v-loading="loading"
@@ -61,8 +77,8 @@
           <el-table-column
             align="center"
             prop="label"
-            label="标签"
-            width="90px"
+            label="攻击类型"
+            width="120px"
           />
           <el-table-column
             align="center"
@@ -121,15 +137,26 @@
         <div id="tableHalfPieChart" ref="tableHalfPieChart" />
       </el-card>
     </div>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="65%"
+      :destroy-on-close="true"
+      title="风险ip列表"
+    >
+      <IpStatistic />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 
-import { getRecordsData } from '@/api/history'
+import { getRecordsData, getRecordsDataByLabel } from '@/api/history'
 import * as echarts from 'echarts'
+import IpStatistic from '@/views/history/component/IpStatistics.vue'
 
 export default {
+  components: { IpStatistic },
   data() {
     return {
       tableData: [],
@@ -151,7 +178,25 @@ export default {
       halfPieChartData: [],
       dstBytes: { name: '目的字节数', value: 0 },
       srcBytes: { name: '源字节数', value: 0 },
-      totalBytes: 0
+      totalBytes: 0,
+      options: [{
+        value: 'DDoS attack-HOIC',
+        label: 'DDoS attack-HOIC'
+      }, {
+        value: 'Benign',
+        label: 'Benign'
+      }, {
+        value: 'Infiltration',
+        label: 'Infiltration'
+      }, {
+        value: 'SSH-Bruteforce',
+        label: 'SSH-Bruteforce'
+      }, {
+        value: 'Dos attacks-GoldenEye',
+        label: 'Dos attacks-GoldenEye'
+      }],
+      selectValue: '',
+      dialogVisible: false
     }
   },
   async mounted() {
@@ -210,11 +255,17 @@ export default {
     },
     handleSizeChange(size) {
       this.pagination.pageSize = size
-      this.fetchData()
+      if (this.selectValue === '') {
+        this.fetchData()
+      } else {
+        this.fetchRecordDataByLabel()
+      }
     },
     handleCurrentChange(pageNum) {
       this.pagination.currentPage = pageNum
-      this.fetchData()
+      if (this.selectValue === '') { this.fetchData() } else {
+        this.fetchRecordDataByLabel()
+      }
     },
     initPieGraph() {
       const myChart = echarts.init(this.$refs.tablePieChart)
@@ -278,6 +329,7 @@ export default {
       myChart.setOption(option)
     },
     refreshTable() {
+      this.selectValue = ''
       this.pagination.currentPage = 1
       this.pagination.pageSize = 10
       this.fetchData()
@@ -290,6 +342,62 @@ export default {
       } else {
         return ''
       }
+    },
+    handleSelectChange() {
+      this.pagination.currentPage = 1
+      this.pagination.pageSize = 10
+      this.fetchRecordDataByLabel()
+    },
+    async fetchRecordDataByLabel() {
+      this.loading = true
+      await getRecordsDataByLabel(this.pagination.currentPage, this.pagination.pageSize, this.selectValue).then((response) => {
+        const data = response.data.data
+        console.log(data)
+        this.tableData = data.data
+        this.pagination.total = data.total
+        this.pieData = []
+        this.halfPieChartData = []
+        this.tcp.value = 0
+        this.udp.value = 0
+        this.icmp.value = 0
+        this.dstBytes.value = 0
+        this.srcBytes.value = 0
+        for (const item of data.data) {
+          this.dstBytes.value += item.dst_bytes
+          this.srcBytes.value += item.src_bytes
+          switch (item.protocol) {
+            case 'icmp':
+              this.icmp.value++
+              break
+            case 'tcp':
+              this.tcp.value++
+              break
+            case 'udp':
+              this.udp.value++
+              break
+          }
+        }
+        this.pieData.push(this.icmp, this.tcp, this.udp)
+        this.halfPieChartData.push(this.dstBytes, this.srcBytes)
+        this.halfPieChartData.push({
+          value: this.srcBytes.value + this.dstBytes.value,
+          itemStyle: {
+            // stop the chart from rendering this piece
+            color: 'none',
+            decal: {
+              symbol: 'none'
+            }
+          },
+          label: {
+            show: false
+          }
+        })
+        this.totalBytes = this.dstBytes.value + this.srcBytes.value
+        this.initPieGraph()
+        this.initHalfPieGraph()
+        this.loading = false
+      })
+      this.loading = false
     }
   }
 }
