@@ -74,7 +74,8 @@ export const constantRoutes = [
         path: 'index',
         name: 'history',
         component: () => import('@/views/history/index'),
-        meta: { title: '历史记录', icon: 'form' }
+        meta: { title: '溯源信息', affix: false },
+        hidden: true
       }
     ]
   },

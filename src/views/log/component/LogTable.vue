@@ -45,11 +45,11 @@
           width="180"
           align="center"
         />
-        <el-table-column
-          prop="srcIP"
-          label="源IP"
-          align="center"
-        />
+        <!--        <el-table-column-->
+        <!--          prop="srcIP"-->
+        <!--          label="源IP"-->
+        <!--          align="center"-->
+        <!--        />-->
         <el-table-column
           prop="dstIP"
           label="目的IP"

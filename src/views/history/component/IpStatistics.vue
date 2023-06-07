@@ -18,7 +18,7 @@
       />
       <el-table-column
         prop="ip"
-        label="被攻击ip"
+        label="攻击ip"
         align="center"
         width="150px"
       />
