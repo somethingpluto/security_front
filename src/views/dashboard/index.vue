@@ -53,7 +53,6 @@
         <div>
           <div class="item1">
             <div id="lineChart" ref="lineChart" />
-            <el-button icon="el-icon-menu" type="primary">详细分析</el-button>
           </div>
         </div>
       </el-card>
