@@ -110,11 +110,11 @@ export default {
 }
 .item1{
   width: 100%;
-  height: 300px;
+  height: 290px;
 }
 .item2{
   width: 100%;
-  height: 400px
+  height: 342px
 }
 #currentPagePie{
   width: 100%;

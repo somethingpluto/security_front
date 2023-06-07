@@ -21,13 +21,6 @@
               :value="item.value"
             />
           </el-select>
-          <el-button
-            icon="el-icon-cpu"
-            type="primary"
-            size="medium"
-            style="margin-left: 10px"
-            @click="()=>{this.dialogVisible=true}"
-          >风险IP</el-button>
         </div>
         <el-table
           v-loading="loading"
@@ -137,15 +130,6 @@
         <div id="tableHalfPieChart" ref="tableHalfPieChart" />
       </el-card>
     </div>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="65%"
-      :destroy-on-close="true"
-      title="风险ip列表"
-    >
-      <IpStatistic />
-    </el-dialog>
-
   </div>
 </template>
 
@@ -153,10 +137,8 @@
 
 import { getRecordsData, getRecordsDataByLabel } from '@/api/history'
 import * as echarts from 'echarts'
-import IpStatistic from '@/views/history/component/IpStatistics.vue'
 
 export default {
-  components: { IpStatistic },
   data() {
     return {
       tableData: [],
@@ -408,17 +390,17 @@ export default {
   height: 100%;
   display: flex;
   justify-content: left;
-  align-items: center;
+  position: relative;
   .item1{
-    height: 100%;
     flex: 3;
   }
   .item2{
+    margin-top: 10px;
     flex: 1.5;
     margin-left: 10px;
     #tablePieChart{
       width: 100%;
-      height: 400px
+      height: 390px
     }
     #tableHalfPieChart{
       width: 100%;

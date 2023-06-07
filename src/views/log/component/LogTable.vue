@@ -7,22 +7,21 @@
     element-loading-background="rgba(235, 241, 246, 0.7)"
   >
     <div class="header">
-      <span style="width: 120px">攻击类型:</span>
-      <el-select v-model="selectValue" style="margin-right: 10px" placeholder="请选择攻击类型">
-        <el-option
-          v-for="item in warningLevel"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-          <span style="float: left">{{ item.label }}</span>
-        </el-option>
-      </el-select>
-      <span style="width: 120px;">攻击概述:</span>
-      <el-input v-model="inputValue" clearable style="margin-right: 10px" placeholder="请输入记录类型" />
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button type="primary" @click="ipTrace">
-        IP溯源
+      <div>
+        <span style="width: 120px">攻击类型:</span>
+        <el-select v-model="selectValue" style="margin-right: 10px;width: 180px" placeholder="请选择攻击类型">
+          <el-option
+            v-for="item in warningLevel"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+            <span style="float: left">{{ item.label }}</span>
+          </el-option>
+        </el-select>
+      </div>
+      <el-button type="primary" @click="()=>{this.dialogVisible = true}">
+        风险IP
       </el-button>
     </div>
     <div
@@ -71,14 +70,25 @@
         :total="pagination.total"
       />
     </div>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="65%"
+      :destroy-on-close="true"
+      title="风险ip列表"
+      style="height: 400px"
+    >
+      <IpStatistic />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import fa from 'element-ui/src/locale/lang/fa'
+
+import IpStatistic from '@/views/log/component/IpStatistics.vue'
 
 export default {
   name: 'LogTable',
+  components: { IpStatistic },
   data() {
     return {
       warningLevel: [{ label: 'Benign', value: 'Benign' }, { label: 'Bot', value: 'bot' }, { label: 'Dos', value: 'Dos' }, { label: 'Infiltration', value: 'Infiltration' }, { label: 'SSH-Bruteforce', value: 'SSH-Bruteforce' }, { label: 'DDos', value: 'DDos' }],
@@ -173,7 +183,8 @@ export default {
       },
       inputValue: '',
       realTableData: [],
-      tableLoading: false
+      tableLoading: false,
+      dialogVisible: false
     }
   },
   mounted() {
@@ -213,12 +224,12 @@ export default {
   .header{
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
   }
   .body{
     width: 100%;
-    min-height: 600px;
+    min-height: 632px;
   }
 }
 .pagination{

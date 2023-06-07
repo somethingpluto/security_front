@@ -1,11 +1,11 @@
 <template>
   <div class="box">
     <div class="log-card">
-      <el-card shadow="hover">
+      <el-card style="min-height: 100%" shadow="hover">
         <LogTable />
       </el-card></div>
     <div class="log-chart">
-      <el-card>
+      <el-card style="min-height: 100%">
         <log-chart />
       </el-card></div>
   </div>
@@ -54,7 +54,7 @@ export default {
   margin-top: 10px;
   .log-card{
     flex: 3;
-    height: 100%;
+    min-eight: 100%;
     margin-left: 10px;
     margin-right: 10px;
   }

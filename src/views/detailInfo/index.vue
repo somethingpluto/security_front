@@ -57,7 +57,7 @@
           /> <el-table-column
             prop="measure"
             label="建议措施"
-            align="center"
+            align="left"
           />
         </el-table>
         <h3 style="text-indent: 2em">{{ realConclude }}</h3>

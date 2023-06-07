@@ -74,8 +74,8 @@ export const constantRoutes = [
         path: 'index',
         name: 'history',
         component: () => import('@/views/history/index'),
-        meta: { title: '溯源信息', affix: false },
-        hidden: true
+        meta: { title: '历史记录', icon: 'history' }
+        // hidden: true
       }
     ]
   },
@@ -87,7 +87,43 @@ export const constantRoutes = [
         path: 'index',
         name: 'log',
         component: () => import('@/views/log/index.vue'),
-        meta: { title: '日志记录', icon: 'form' }
+        meta: { title: '日志记录', icon: 'log' }
+      }
+    ]
+  },
+  {
+    path: '/modeChange',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'mode',
+        component: () => import('@/views/mode/index.vue'),
+        meta: { title: '模型选择', icon: 'mode' }
+      }
+    ]
+  },
+  {
+    path: '/ipBlack',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'log',
+        component: () => import('@/views/ipBlack/index.vue'),
+        meta: { title: 'IP黑名单', icon: 'ip' }
+      }
+    ]
+  },
+  {
+    path: '/detector',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'detector',
+        component: () => import('@/views/detector/index.vue'),
+        meta: { title: '检测器', icon: 'detector' }
       }
     ]
   },

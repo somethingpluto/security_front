@@ -8,13 +8,6 @@
         </div>
         <panel-group />
       </el-card>
-      <el-card class="right" shadow="hover">
-        <div style="display: flex;justify-content: space-between;align-items: center">
-          <h2>检测器更新</h2>
-          <el-button type="primary" @click="()=>{this.dialogVisible=true}">上传数据</el-button>
-        </div>
-        <div id="line-area" ref="lineArea" style="width: 100%;height: 200px" />
-      </el-card>
     </div>
     <div class="body">
       <el-card
@@ -283,12 +276,7 @@ export default {
     align-items: center;
     margin-top: 10px;
     .left{
-      flex: 3;
-      margin: 10px;
-      height: 100%;
-    }
-    .right{
-      flex: 1;
+      width: 100%;
       margin: 10px;
       height: 100%;
     }
@@ -319,7 +307,7 @@ export default {
       align-items: center;
     }
     #lineChart{
-      height: 350px;
+      height: 388px;
       width: 100%;
     }
     #pie{
