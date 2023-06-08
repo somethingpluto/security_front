@@ -33,32 +33,27 @@
         :row-class-name="tableRowClassName"
       >
         <el-table-column
+          prop="id"
+          label="ID"
+          width="180"
+          align="center"
+        />
+        <el-table-column
+          prop="info"
+          label="信息"
+          align="center"
+        />
+        <el-table-column
+          prop="from"
+          label="来自"
+          align="center"
+        />
+        <el-table-column
           prop="date"
           label="日期"
-          width="180"
           align="center"
         />
-        <el-table-column
-          prop="type"
-          label="类型"
-          width="180"
-          align="center"
-        />
-        <!--        <el-table-column-->
-        <!--          prop="srcIP"-->
-        <!--          label="源IP"-->
-        <!--          align="center"-->
-        <!--        />-->
-        <el-table-column
-          prop="dstIP"
-          label="目的IP"
-          align="center"
-        />
-        <el-table-column
-          prop="duration"
-          label="攻击持续时间s"
-          align="center"
-        />
+
       </el-table>
     </div>
     <div class="pagination">
@@ -85,6 +80,7 @@
 <script>
 
 import IpStatistic from '@/views/log/component/IpStatistics.vue'
+import { getLogList } from '@/api/log'
 
 export default {
   name: 'LogTable',
@@ -93,89 +89,6 @@ export default {
     return {
       warningLevel: [{ label: 'Benign', value: 'Benign' }, { label: 'Bot', value: 'bot' }, { label: 'Dos', value: 'Dos' }, { label: 'Infiltration', value: 'Infiltration' }, { label: 'SSH-Bruteforce', value: 'SSH-Bruteforce' }, { label: 'DDos', value: 'DDos' }],
       selectValue: '',
-      tableData: [{
-        date: '2023-06-02 19:25:27',
-        type: 'DDos',
-        srcIP: '35.214.147.27',
-        dstIP: '198.34.85.30',
-        duration: '19'
-      }, {
-        date: '2023-06-04 03:09:48',
-        type: 'DDos',
-        srcIP: '207.137.216.129',
-        dstIP: '6.64.200.166',
-        duration: '16'
-
-      }, {
-        date: '2023-06-05 18:19:35',
-        type: 'Dos',
-        srcIP: '197.96.39.137',
-        dstIP: '212.208.220.167',
-        duration: '32'
-
-      }, {
-        date: '2023-06-02 13:24:14',
-        type: 'DDos',
-        srcIP: '96.244.218.102',
-        dstIP: '3.181.234.219',
-        duration: '54'
-
-      }, {
-        date: '2023-06-02 18:28:19',
-        type: 'Bot',
-        srcIP: '120.111.248.73',
-        dstIP: '145.223.43.86',
-        duration: '32'
-
-      }, {
-        date: '2023-06-03 09:49:18',
-        type: 'SSH-Bruteforce',
-        srcIP: '56.139.198.145',
-        dstIP: '51.137.155.209',
-        duration: '76'
-
-      }, {
-        date: '2023-06-02 06:07:16',
-        type: 'SSH-Bruteforce',
-        srcIP: '83.206.87.2',
-        dstIP: '234.3.215.26',
-        duration: '8'
-
-      }, {
-        date: '2023-06-01 21:35:01',
-        type: 'SSH-Bruteforce',
-        srcIP: '192.68.128.194',
-        dstIP: '33.51.33.217',
-        duration: '11'
-
-      }, {
-        date: '2023-06-01 16:12:24',
-        type: 'DDos',
-        srcIP: '116.89.168.174',
-        dstIP: '218.59.218.223',
-        duration: '24'
-
-      }, {
-        date: '2023-06-01 21:07:23',
-        type: 'Bot',
-        srcIP: '146.55.212.212',
-        dstIP: '21.29.161.9',
-        duration: '40'
-      },
-      {
-        date: '2023-06-01 04:53:40',
-        type: 'DDos',
-        srcIP: '119.250.41.29',
-        dstIP: '110.91.144.121',
-        duration: '40'
-      },
-      {
-        date: '2023-06-03 18:26:25',
-        type: 'Bot',
-        srcIP: '119.170.250.129',
-        dstIP: '199.213.25.237',
-        duration: '40'
-      }],
       pagination: {
         total: 100,
         currentPage: 1,
@@ -184,11 +97,12 @@ export default {
       inputValue: '',
       realTableData: [],
       tableLoading: false,
-      dialogVisible: false
+      dialogVisible: false,
+      tableData: []
     }
   },
-  mounted() {
-    this.fetchData()
+  async mounted() {
+    await this.fetchData()
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
@@ -204,13 +118,15 @@ export default {
     ipTrace() {
       this.$router.push('/history/index')
     },
-    fetchData() {
+    async fetchData() {
       this.tableLoading = true
-      setTimeout(() => {
-        this.realTableData = this.tableData
-        this.tableLoading = false
-        this.pagination.total = this.realTableData.length
-      }, 1500)
+      await getLogList(this.pagination.currentPage, this.pagination.pageSize).then((response) => {
+        const data = response.data.data
+        console.log(data)
+        this.tableData = data.data
+        this.pagination.total = data.total
+      })
+      this.tableLoading = false
     }
   }
 }

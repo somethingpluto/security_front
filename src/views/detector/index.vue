@@ -19,7 +19,7 @@
         </el-upload>
       </div>
       <div class="body">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName">
           <el-tab-pane label="上传文件要求" name="introduce">
             <Introduce />
           </el-tab-pane>
