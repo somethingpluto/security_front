@@ -37,12 +37,20 @@
         prop="start_time"
         label="攻击开始时间"
         align="center"
-      />
+      >
+        <template slot-scope="scope">
+          {{ timeSimply(scope.row.start_time) }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="end_time"
         label="攻击结束时间"
         align="center"
-      />
+      >
+        <template slot-scope="scope">
+          {{ timeSimply(scope.row.end_time) }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="count"
         label="攻击次数"
@@ -55,6 +63,7 @@
 
 <script>
 import { getIpStatisticData } from '@/api/history'
+import timeSimply from '../../../utils/time'
 
 export default {
   name: 'IpStatistic',
@@ -68,6 +77,7 @@ export default {
     this.fetchIpStatisticData()
   },
   methods: {
+    timeSimply,
     async fetchIpStatisticData() {
       this.loading = true
       await getIpStatisticData().then((response) => {

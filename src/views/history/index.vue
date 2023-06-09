@@ -35,9 +35,9 @@
         >
           <el-table-column
             align="center"
-            prop="id"
             label="id"
             width="60px"
+            type="index"
           />
           <el-table-column
             align="center"
@@ -102,7 +102,11 @@
             prop="date"
             label="日期"
             width="200px"
-          />
+          >
+            <template slot-scope="scope">
+              {{ timeSimply(scope.row.date) }}
+            </template>
+          </el-table-column>>
         </el-table>
         <div style="display: flex;justify-content: right;align-items: center">
           <el-pagination
@@ -137,6 +141,8 @@
 
 import { getRecordsData, getRecordsDataByLabel } from '@/api/history'
 import * as echarts from 'echarts'
+import { formatTime } from '@/utils'
+import timeSimply from '../../utils/time'
 
 export default {
   data() {
@@ -185,6 +191,8 @@ export default {
     await this.fetchData()
   },
   methods: {
+    timeSimply,
+    formatTime,
     async fetchData() {
       this.loading = true
       await getRecordsData(this.pagination.currentPage, this.pagination.pageSize).then((response) => {

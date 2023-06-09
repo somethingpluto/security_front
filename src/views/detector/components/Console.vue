@@ -58,8 +58,8 @@ export default {
   height: 300px;
 }
 .console{
-  min-height: 300px;
-  max-height: 300px;
+  min-height: 330px;
+  max-height: 330px;
   overflow:auto;
   background-color: black;
   border-radius: 10px;

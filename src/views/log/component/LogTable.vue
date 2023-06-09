@@ -40,7 +40,11 @@
           prop="date"
           label="日期"
           align="center"
-        />
+        >
+          <template slot-scope="scope">
+            {{ timeSimply(scope.row.date) }}
+          </template>
+        </el-table-column>
 
       </el-table>
     </div>
@@ -60,6 +64,7 @@
 
 <script>
 import { getLogList } from '@/api/log'
+import timeSimply from '../../../utils/time'
 
 export default {
   name: 'LogTable',
@@ -83,6 +88,7 @@ export default {
     await this.fetchData()
   },
   methods: {
+    timeSimply,
     tableRowClassName({ row, rowIndex }) {
       if (row.type === 'DDos') {
         return 'ddos'

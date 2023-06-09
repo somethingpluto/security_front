@@ -39,8 +39,16 @@
           <el-table-column prop="ip" label="IP" align="center" />
           <el-table-column prop="grade" label="等级" align="center" />
           <el-table-column prop="status" label="状态" align="center" />
-          <el-table-column prop="create_time" label="创建时间" align="center" />
-          <el-table-column prop="update_time" label="更新时间" align="center" />
+          <el-table-column prop="create_time" label="创建时间" align="center">
+            <template slot-scope="scope">
+              {{ timeSimply(scope.row.create_time) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="update_time" label="更新时间" align="center">
+            <template slot-scope="scope">
+              {{ timeSimply(scope.row.update_time) }}
+            </template>
+          </el-table-column>
         </el-table>
         <div style="display: flex;justify-content: right;align-items: center;margin-top: 10px">
           <el-pagination
@@ -60,6 +68,7 @@
 
 <script>
 import { addIptoBlackList, getBlackIpList } from '@/api/blackip'
+import timeSimply from '../../utils/time'
 
 export default {
   name: 'BlackIP',
@@ -79,6 +88,7 @@ export default {
     this.fetchBlackIpList()
   },
   methods: {
+    timeSimply,
     async fetchBlackIpList() {
       this.loading = true
       await getBlackIpList(this.pagination.currentPage, this.pagination.pageSize).then((response) => {
