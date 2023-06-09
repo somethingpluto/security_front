@@ -1,36 +1,19 @@
 <template>
-  <div
-    v-loading="tableLoading"
-    class="box"
-    element-loading-text="日志记录加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(235, 241, 246, 0.7)"
-  >
-    <div class="header">
-      <div>
-        <span style="width: 120px">攻击类型:</span>
-        <el-select v-model="selectValue" style="margin-right: 10px;width: 180px" placeholder="请选择攻击类型">
-          <el-option
-            v-for="item in warningLevel"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <span style="float: left">{{ item.label }}</span>
-          </el-option>
-        </el-select>
-      </div>
-      <el-button type="primary" @click="()=>{this.dialogVisible = true}">
-        风险IP
-      </el-button>
-    </div>
+  <div class="box">
+
     <div
       class="body"
     >
       <el-table
+        v-loading="tableLoading"
+        element-loading-text="日志记录加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(235, 241, 246, 0.7)"
         :data="realTableData"
-        style="width: 100%;height: 100%"
+        style="width: 100%;height: 100%;margin-top: 10px"
         :row-class-name="tableRowClassName"
+        border
+        stripe
       >
         <el-table-column
           prop="id"
@@ -40,12 +23,17 @@
         />
         <el-table-column
           prop="info"
-          label="信息"
+          label="邮件信息"
           align="center"
         />
         <el-table-column
           prop="from"
-          label="来自"
+          label="发送方"
+          align="center"
+        />
+        <el-table-column
+          prop="to"
+          label="接收方"
           align="center"
         />
         <el-table-column
@@ -59,32 +47,22 @@
     <div class="pagination">
       <el-pagination
         :current-page="pagination.currentPage"
-        :page-sizes="[12, 25, 20, 25]"
+        :page-sizes="[10, 15, 20, 25]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pagination.total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
       />
     </div>
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="65%"
-      :destroy-on-close="true"
-      title="风险ip列表"
-      style="height: 400px"
-    >
-      <IpStatistic />
-    </el-dialog>
   </div>
 </template>
 
 <script>
-
-import IpStatistic from '@/views/log/component/IpStatistics.vue'
 import { getLogList } from '@/api/log'
 
 export default {
   name: 'LogTable',
-  components: { IpStatistic },
   data() {
     return {
       warningLevel: [{ label: 'Benign', value: 'Benign' }, { label: 'Bot', value: 'bot' }, { label: 'Dos', value: 'Dos' }, { label: 'Infiltration', value: 'Infiltration' }, { label: 'SSH-Bruteforce', value: 'SSH-Bruteforce' }, { label: 'DDos', value: 'DDos' }],
@@ -92,7 +70,7 @@ export default {
       pagination: {
         total: 100,
         currentPage: 1,
-        pageSize: 12
+        pageSize: 10
       },
       inputValue: '',
       realTableData: [],
@@ -122,11 +100,18 @@ export default {
       this.tableLoading = true
       await getLogList(this.pagination.currentPage, this.pagination.pageSize).then((response) => {
         const data = response.data.data
-        console.log(data)
-        this.tableData = data.data
+        this.realTableData = data.data
         this.pagination.total = data.total
       })
       this.tableLoading = false
+    },
+    handleSizeChange(size) {
+      this.pagination.pageSize = size
+      this.fetchData()
+    },
+    handleCurrentChange(page) {
+      this.pagination.currentPage = page
+      this.fetchData()
     }
   }
 }
@@ -135,6 +120,7 @@ export default {
 <style scoped lang="scss">
 .box{
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   .header{
@@ -149,7 +135,8 @@ export default {
   }
 }
 .pagination{
-  float: right;
+  justify-content: right;
+  align-items: center;
 }
 
 </style>

@@ -65,29 +65,15 @@ export const constantRoutes = [
     }
     ]
   },
-
   {
-    path: '/history',
+    path: '/detector',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'history',
-        component: () => import('@/views/history/index'),
-        meta: { title: '历史记录', icon: 'history' }
-        // hidden: true
-      }
-    ]
-  },
-  {
-    path: '/log',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'log',
-        component: () => import('@/views/log/index.vue'),
-        meta: { title: '日志记录', icon: 'log' }
+        name: 'detector',
+        component: () => import('@/views/detector/index.vue'),
+        meta: { title: '检测器更新', icon: 'detector' }
       }
     ]
   },
@@ -115,18 +101,33 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
-    path: '/detector',
+    path: '/log',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'detector',
-        component: () => import('@/views/detector/index.vue'),
-        meta: { title: '检测器', icon: 'detector' }
+        name: 'log',
+        component: () => import('@/views/log/index.vue'),
+        meta: { title: '日志记录', icon: 'log' }
       }
     ]
   },
+  {
+    path: '/history',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'history',
+        component: () => import('@/views/history/index'),
+        meta: { title: '历史记录', icon: 'history' }
+        // hidden: true
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
