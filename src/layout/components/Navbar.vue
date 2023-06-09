@@ -4,21 +4,13 @@
 
     <breadcrumb class="breadcrumb-container" />
 
-    <!--    <div class="right-menu">-->
-    <!--      <el-dropdown class="avatar-container" trigger="click">-->
-    <!--        <div class="avatar-wrapper">-->
-    <!--          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
-    <!--          <i class="el-icon-caret-bottom" />-->
-    <!--        </div>-->
-    <!--        &lt;!&ndash;        <el-dropdown-menu slot="dropdown" class="user-dropdown">&ndash;&gt;-->
-    <!--        &lt;!&ndash;          &lt;!&ndash;          <el-dropdown-item divided @click.native="logout">&ndash;&gt;&ndash;&gt;-->
-    <!--        &lt;!&ndash;          &lt;!&ndash;            <span style="display:block;">Log Out</span>&ndash;&gt;&ndash;&gt;-->
-    <!--        &lt;!&ndash;          &lt;!&ndash;          </el-dropdown-item>&ndash;&gt;&ndash;&gt;-->
-    <!--        &lt;!&ndash;        </el-dropdown-menu>&ndash;&gt;-->
-    <!--      </el-dropdown>-->
-    <!--    </div>-->
-  </div>
-</template>
+    <div class="right-menu">
+      <div style="display: flex;justify-content: left;align-items: center;margin-right: 10px">
+        <el-image style="width: 40px;height: 40px" :src="require('../../../src/assets/images/user.png')" />
+        <span style="color: black;margin-left: 10px">您好! {{ this.$store.state.user.name }}</span>
+      </div>
+    </div>
+  </div></template>
 
 <script>
 import { mapGetters } from 'vuex'

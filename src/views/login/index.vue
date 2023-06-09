@@ -69,7 +69,7 @@ export default {
     }
     return {
       loginForm: {
-        username: '123',
+        username: '1808208820@qq.com',
         password: '123456'
       },
       loginRules: {
@@ -118,6 +118,7 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
+            this.$store.state.user.name = this.loginForm.username
           }).catch(() => {
             this.loading = false
           })
