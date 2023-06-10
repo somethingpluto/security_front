@@ -41,9 +41,6 @@
         </el-tabs>
       </el-card>
     </div>
-    <div class="foot">
-      所有产权归@湖北大学所拥有
-    </div>
   </div>
 </template>
 
@@ -151,7 +148,7 @@ $cursor: #fff;
   width: 100%;
   height: 100%;
   .body{
-    height: 92%;
+    height: 100%;
     display: flex;
     justify-content: right;
     align-items: center;
