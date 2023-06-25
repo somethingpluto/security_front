@@ -1,18 +1,19 @@
 <template>
   <div class="container">
-    <h2>mode</h2>
+    <div />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Mode'
+  name: 'Result'
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .container{
   height: 100%;
   width: 100%;
 }
+
 </style>

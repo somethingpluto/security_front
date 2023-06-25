@@ -1,18 +1,15 @@
 <template>
   <div class="container">
-    <h2>mode</h2>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Mode'
+  name: 'Predict'
 }
 </script>
 
 <style lang="scss" scoped>
-.container{
-  height: 100%;
-  width: 100%;
-}
+
 </style>

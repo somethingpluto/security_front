@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <h2>mode</h2>
+    <h2>database</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Mode'
+  name: 'Database'
 }
 </script>
 

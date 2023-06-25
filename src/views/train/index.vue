@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <h2>mode</h2>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Mode'
+  name: 'Train'
 }
 </script>
 
@@ -14,5 +14,6 @@ export default {
 .container{
   height: 100%;
   width: 100%;
+  background-color: #f7f7f7;
 }
 </style>

@@ -6,7 +6,6 @@
 
     <div class="right-menu">
       <div style="display: flex;justify-content: left;align-items: center;margin-right: 10px">
-        <el-image style="width: 40px;height: 40px" :src="require('../../../src/assets/images/user.png')" />
         <span style="color: black;margin-left: 10px">您好! {{ this.$store.state.user.name }}</span>
       </div>
     </div>

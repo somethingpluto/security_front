@@ -1,10 +1,7 @@
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" style="width: 50px;height: 50px" :src="require('../../../assets/images/logo.png')" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
-      </router-link>
+      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/" />
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <!--        <el-img v-if="logo" style="width: 30px;height: 30px" :src="require('../../../assets/images/logo.png')" class="sidebar-logo" />-->
         <h1 class="sidebar-title">Monitor</h1>
