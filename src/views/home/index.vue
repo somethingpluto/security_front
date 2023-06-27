@@ -21,8 +21,11 @@
 </template>
 
 <script>
+import Header from '@/components/Header/index.vue'
+
 export default {
   name: 'Home',
+  components: { Header },
   methods: {
     toTrain() {
       this.$router.push('/train/home')
@@ -37,7 +40,7 @@ export default {
 <style lang="scss" scoped>
 .container{
   margin: 0;
-  height: 100%;
+  height: calc(100% - 80px);
   width: 100%;
   display: flex;
   background-color:#f7f7f7;

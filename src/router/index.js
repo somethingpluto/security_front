@@ -4,7 +4,6 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -34,27 +33,36 @@ export const constantRoutes = [
   {
     path: '/',
     redirect: '/home',
-    component: () => import('@/App.vue'),
+    component: () => import('@/layout/index.vue'),
     children: [{
       path: 'home',
       component: () => import('@/views/home/index.vue')
-    }]
-  },
-  {
-    path: '/train',
-    redirect: '/train/home',
-    component: () => import('@/views/train/index.vue'),
-    children: [{
-      path: 'home',
-      component: () => import('@/views/train/component/home.vue')
     },
     {
-      path: 'console',
+      path: 'mode',
+      component: () => import('@/views/mode/index.vue')
+    },
+    {
+      path: 'console/:id',
+      name: 'console',
       component: () => import('@/views/train/component/console.vue')
     },
     {
-      path: 'result',
-      component: () => import('@/views/train/component/result.vue')
+      path: 'database',
+      component: () => import('@/views/database/index.vue')
+    }, {
+      path: 'train',
+      redirect: '/train/home',
+      component: () => import('@/views/train/index.vue'),
+      children: [{
+        path: 'home',
+        component: () => import('@/views/train/component/home.vue')
+      },
+      {
+        path: 'result',
+        component: () => import('@/views/train/component/result.vue')
+      }
+      ]
     }
     ]
   }
